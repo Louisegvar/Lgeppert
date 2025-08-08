@@ -1,0 +1,934 @@
+
+mysql> create database livraria;
+Query OK, 1 row affected (0.721 sec)
+
+mysql> use livraria;
+Database changed
+mysql> create table Livros ( ID int(4) auto_increment, Titulo varchar(128), Genero varchar(50), Ano year, Preco decimal(4, 2), ISBN varchar(30), ID_editora int(4), ID_autor int(4), Primary key (ID));
+Query OK, 0 rows affected, 3 warnings (0.974 sec)
+
+mysql> create table Autores ( ID int Primary key auto_increment, Nome varchar(120) not null, Nacionalidade varchar(50), Data_Nascimento date);
+Query OK, 0 rows affected (0.418 sec)
+
+mysql> drop table Livros;
+Query OK, 0 rows affected (0.532 sec)
+
+mysql> create table Editoras ( ID int Primary key auto_increment, Nome varchar(100) not null, Cidade varchar(50), País varchar(50));
+Query OK, 0 rows affected (0.387 sec)
+
+mysql> create table Livros ( ID int PRIMARY KEY auto_increment, Título varchar(200) not null, Gênero varchar(50), Ano year, Preco decimal(10, 2), ISBN varchar(20) UNIQUE, ID_editora int, ID_autor int, foreign key (ID_editora) REFERENCES Editoras(ID), FOREIGN KEY (ID_autor) REFERENCES Autores(id));
+Query OK, 0 rows affected (1.667 sec)
+
+mysql> create table Clientes ( ID int Primary key auto_increment, Nome varchar(100) not null, Email varchar(100) unique, Telefone varchar(20), Endereço TEXT);
+Query OK, 0 rows affected (0.784 sec)
+
+mysql> create table Vendas ( ID int PRIMARY KEY auto_increment, Data date not null, ID_cliente int, ID_livro int, Quantidade int not null, Total decimal(10, 2) not null, foreign key (ID_cliente) REFERENCES Clientes(ID), FOREIGN KEY (ID_livro) REFERENCES Livros(id));
+Query OK, 0 rows affected (0.980 sec)
+
+mysql> create table Estoque ( ID_livro int PRIMARY KEY, Quantidade int not null default 0, Localização varchar(50), FOREIGN KEY (ID_livro) REFERENCES Livros(id));
+Query OK, 0 rows affected (0.652 sec)
+
+mysql> insert into Autores (ID, Nome, Nacionalidade, Data_Nascimento) values
+    -> ('101', 'Lucas Ferreira', 'Brasileiro', '1980/03/12');
+Query OK, 1 row affected, 1 warning (0.251 sec)
+
+mysql> insert into Autores (ID, Nome, Nacionalidade, Data_Nascimento) values
+    -> ('102', 'Sofia Montoya', 'Espanhola', '1975/07/25'),
+    -> ('103', 'Aiden Clark', 'Canadense', '1990/03/11'),
+    -> ('104', 'Mei Ling Zhang', 'Chinesa', '1975/05/19'),
+    -> ('105', 'Omar Haddad', 'Brasileiro', '1978/09/30');
+Query OK, 4 rows affected, 4 warnings (0.180 sec)
+Records: 4  Duplicates: 0  Warnings: 4
+
+mysql> insert into Editoras (ID, Nome, Cidade, País) values
+    -> ('201','Editora Aurora', 'São Paulo', 'Brasil'),
+    -> ('202', 'Libros del Sol', 'Madrid', 'Espanha'),
+    -> ('203', 'Maple Publishing', 'Toronto', 'Canadá'),
+    -> ('204', 'Lótus Editorial', 'Xangai', 'China'),
+    -> ('205', 'Nile Books', 'Cairo', 'Egito');
+Query OK, 5 rows affected (0.272 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into Clientes (ID, Nome, Email, Telefone, Endereço) values
+    -> ('301', 'Ana Souza', 'ana.souza@email.com', '(11) 91234-5678', 'Rua das Flores, 123, SP'),
+    -> ('302', 'Bruno Martins', 'bruno.martins@mail.com', '(21) 98765-4321', 'Av. Central, 456, RJ'),
+    -> ('303', 'Carla Lima', 'carla.lima@gmail.com', '(31) 99876-5432', 'Rua do Comércio, 789, MG'),
+    -> ('304', 'Diego Fernandes', 'diegof@yahoo.com', '(41) 93456-7890', 'Av. Brasil, 321, PR'),
+    -> ('305', 'Elisa Rocha', 'elisa.rocha@outlook.com', '(51) 91234-9876', 'Rua das Acácias, 654, RS');
+Query OK, 5 rows affected (0.256 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into Editoras (ID, Título, Gênero, Ano, Preço, ISBN, ID_Editora, ID_Autor) values
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into Livros (ID, Título, Gênero, Ano, Preço, ISBN, ID_Editora, ID_Autor) values
+    -> ('401'   'O Segredo das Estrelas', 0'Ficção Científica', '2018', '59.90', '978-3-16-148410-0');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Ficção Científica', '2018', '59.90', '978-3-16-148410-0')' at line 2
+mysql> insert into Livros (ID, Título, Gênero, Ano, Preço, ISBN) values
+    -> ('401', 'O Segredo das Estrelas', 'Ficção Científica', '2018', '59.90', '978-3-16-148410-0'),
+    -> ('402', 'Sombras da Memória', 'Romance', '2020', '39.90', '978-1-23-456789-7'),
+    -> ('403', 'Além do Horizonte', 'Aventura', '2016', '49.90','978-0-12-345678-9'),
+    -> ('404', 'O Jardim Secreto', 'Fantasia', '2019', '45.00', '978-9-87-654321-0'),
+    -> ('405', 'Ecos do Deserto', 'Drama', '2021', '55.00', '978-4-56-789012-3');
+ERROR 1054 (42S22): Unknown column 'Preço' in 'field list'
+mysql> insert into Livros (ID, Título, Gênero, Ano, Preco, ISBN) values
+    -> ('401', 'O Segredo das Estrelas', 'Ficção Científica', '2018', '59.90', '978-3-16-148410-0'),
+    -> ('402', 'Sombras da Memória', 'Romance', '2020', '39.90', '978-1-23-456789-7'),
+    -> ('403', 'Além do Horizonte', 'Aventura', '2016', '49.90','978-0-12-345678-9'),
+    -> ('404', 'O Jardim Secreto', 'Fantasia', '2019', '45.00', '978-9-87-654321-0'),
+    -> ('405', 'Ecos do Deserto', 'Drama', '2021', '55.00', '978-4-56-789012-3');
+Query OK, 5 rows affected (0.192 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from autores;
++-----+----------------+---------------+-----------------+
+| ID  | Nome           | Nacionalidade | Data_Nascimento |
++-----+----------------+---------------+-----------------+
+| 101 | Lucas Ferreira | Brasileiro    | 1980-03-12      |
+| 102 | Sofia Montoya  | Espanhola     | 1975-07-25      |
+| 103 | Aiden Clark    | Canadense     | 1990-03-11      |
+| 104 | Mei Ling Zhang | Chinesa       | 1975-05-19      |
+| 105 | Omar Haddad    | Brasileiro    | 1978-09-30      |
++-----+----------------+---------------+-----------------+
+5 rows in set (0.181 sec)
+
+mysql> select * from autores order by name;
+ERROR 1054 (42S22): Unknown column 'name' in 'order clause'
+mysql> select * from autores order by esc;
+ERROR 1054 (42S22): Unknown column 'esc' in 'order clause'
+mysql> select * from autores order by;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from autores order by nome;
++-----+----------------+---------------+-----------------+
+| ID  | Nome           | Nacionalidade | Data_Nascimento |
++-----+----------------+---------------+-----------------+
+| 103 | Aiden Clark    | Canadense     | 1990-03-11      |
+| 101 | Lucas Ferreira | Brasileiro    | 1980-03-12      |
+| 104 | Mei Ling Zhang | Chinesa       | 1975-05-19      |
+| 105 | Omar Haddad    | Brasileiro    | 1978-09-30      |
+| 102 | Sofia Montoya  | Espanhola     | 1975-07-25      |
++-----+----------------+---------------+-----------------+
+5 rows in set (0.138 sec)
+
+mysql> select * from autores order by nacionalidade;
++-----+----------------+---------------+-----------------+
+| ID  | Nome           | Nacionalidade | Data_Nascimento |
++-----+----------------+---------------+-----------------+
+| 101 | Lucas Ferreira | Brasileiro    | 1980-03-12      |
+| 105 | Omar Haddad    | Brasileiro    | 1978-09-30      |
+| 103 | Aiden Clark    | Canadense     | 1990-03-11      |
+| 104 | Mei Ling Zhang | Chinesa       | 1975-05-19      |
+| 102 | Sofia Montoya  | Espanhola     | 1975-07-25      |
++-----+----------------+---------------+-----------------+
+5 rows in set (0.006 sec)
+
+mysql> insert into Vendas (ID, Data, Quantidade, Total) values
+    -> ('501', '15/06/2024', '2', '119.80'),
+    -> ('502', '18/06/2024', '1', '39.90'),
+    -> ('503', '20/06/2024', '3', '149.70'),
+    -> ('504', '22/06/2024', '1', '45.00'),
+    -> ('505', '25/06/2024', '4', '220.00');
+ERROR 1292 (22007): Incorrect date value: '15/06/2024' for column 'Data' at row 1
+mysql> insert into Vendas (ID, Data, Quantidade, Total) values
+    -> ('501', '2024/06/15', '2', '119.80'),
+    -> ('502', '2024/06/18', '1', '39.90'),
+    -> ('503', '20024', '3', '149.70'),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> insert into Vendas (ID, Data, Quantidade, Total) values
+    -> ('501', '2024/06/15', '2', '119.80'),
+    -> ('502', '2024/06/18', '1', '39.90'),
+    -> ('503', '2023/06/20', '3', '149.70'),
+    -> ('504', '2024/09/04', '1', '45.00'),
+    -> ('505', '2024/03/27', '4', '220.00');
+Query OK, 5 rows affected, 5 warnings (0.182 sec)
+Records: 5  Duplicates: 0  Warnings: 5
+
+mysql> select * from Vendas;
++-----+------------+------------+----------+------------+--------+
+| ID  | Data       | ID_cliente | ID_livro | Quantidade | Total  |
++-----+------------+------------+----------+------------+--------+
+| 501 | 2024-06-15 |       NULL |     NULL |          2 | 119.80 |
+| 502 | 2024-06-18 |       NULL |     NULL |          1 |  39.90 |
+| 503 | 2023-06-20 |       NULL |     NULL |          3 | 149.70 |
+| 504 | 2024-09-04 |       NULL |     NULL |          1 |  45.00 |
+| 505 | 2024-03-27 |       NULL |     NULL |          4 | 220.00 |
++-----+------------+------------+----------+------------+--------+
+5 rows in set (0.008 sec)
+
+mysql> select * from Clientes;
++-----+-----------------+-------------------------+-----------------+--------------------------+
+| ID  | Nome            | Email                   | Telefone        | Endereço                 |
++-----+-----------------+-------------------------+-----------------+--------------------------+
+| 301 | Ana Souza       | ana.souza@email.com     | (11) 91234-5678 | Rua das Flores, 123, SP  |
+| 302 | Bruno Martins   | bruno.martins@mail.com  | (21) 98765-4321 | Av. Central, 456, RJ     |
+| 303 | Carla Lima      | carla.lima@gmail.com    | (31) 99876-5432 | Rua do Comércio, 789, MG |
+| 304 | Diego Fernandes | diegof@yahoo.com        | (41) 93456-7890 | Av. Brasil, 321, PR      |
+| 305 | Elisa Rocha     | elisa.rocha@outlook.com | (51) 91234-9876 | Rua das Acácias, 654, RS |
++-----+-----------------+-------------------------+-----------------+--------------------------+
+5 rows in set (0.007 sec)
+
+mysql> select * from Livros;
++-----+------------------------+-------------------+------+-------+-------------------+------------+----------+
+| ID  | Título                 | Gênero            | Ano  | Preco | ISBN              | ID_editora | ID_autor |
++-----+------------------------+-------------------+------+-------+-------------------+------------+----------+
+| 401 | O Segredo das Estrelas | Ficção Científica | 2018 | 59.90 | 978-3-16-148410-0 |       NULL |     NULL |
+| 402 | Sombras da Memória     | Romance           | 2020 | 39.90 | 978-1-23-456789-7 |       NULL |     NULL |
+| 403 | Além do Horizonte      | Aventura          | 2016 | 49.90 | 978-0-12-345678-9 |       NULL |     NULL |
+| 404 | O Jardim Secreto       | Fantasia          | 2019 | 45.00 | 978-9-87-654321-0 |       NULL |     NULL |
+| 405 | Ecos do Deserto        | Drama             | 2021 | 55.00 | 978-4-56-789012-3 |       NULL |     NULL |
++-----+------------------------+-------------------+------+-------+-------------------+------------+----------+
+5 rows in set (0.007 sec)
+
+mysql> select * from Editoras;
++-----+------------------+-----------+---------+
+| ID  | Nome             | Cidade    | País    |
++-----+------------------+-----------+---------+
+| 201 | Editora Aurora   | São Paulo | Brasil  |
+| 202 | Libros del Sol   | Madrid    | Espanha |
+| 203 | Maple Publishing | Toronto   | Canadá  |
+| 204 | Lótus Editorial  | Xangai    | China   |
+| 205 | Nile Books       | Cairo     | Egito   |
++-----+------------------+-----------+---------+
+5 rows in set (0.006 sec)
+
+
+mysql> select * from Vendas;
++-----+------------+------------+----------+------------+--------+
+| ID  | Data       | ID_cliente | ID_livro | Quantidade | Total  |
++-----+------------+------------+----------+------------+--------+
+| 501 | 2024-06-15 |       NULL |     NULL |          2 | 119.80 |
+| 502 | 2024-06-18 |       NULL |     NULL |          1 |  39.90 |
+| 503 | 2023-06-20 |       NULL |     NULL |          3 | 149.70 |
+| 504 | 2024-09-04 |       NULL |     NULL |          1 |  45.00 |
+| 505 | 2024-03-27 |       NULL |     NULL |          4 | 220.00 |
++-----+------------+------------+----------+------------+--------+
+5 rows in set (0.007 sec)
+
+mysql> describe vendas;
++------------+---------------+------+-----+---------+----------------+
+| Field      | Type          | Null | Key | Default | Extra          |
++------------+---------------+------+-----+---------+----------------+
+| ID         | int           | NO   | PRI | NULL    | auto_increment |
+| Data       | date          | NO   |     | NULL    |                |
+| ID_cliente | int           | YES  | MUL | NULL    |                |
+| ID_livro   | int           | YES  | MUL | NULL    |                |
+| Quantidade | int           | NO   |     | NULL    |                |
+| Total      | decimal(10,2) | NO   |     | NULL    |                |
++------------+---------------+------+-----+---------+----------------+
+6 rows in set (0.349 sec)
+
+mysql> desc Livros;
++------------+---------------+------+-----+---------+----------------+
+| Field      | Type          | Null | Key | Default | Extra          |
++------------+---------------+------+-----+---------+----------------+
+| ID         | int           | NO   | PRI | NULL    | auto_increment |
+| Título     | varchar(200)  | NO   |     | NULL    |                |
+| Gênero     | varchar(50)   | YES  |     | NULL    |                |
+| Ano        | year          | YES  |     | NULL    |                |
+| Preco      | decimal(10,2) | YES  |     | NULL    |                |
+| ISBN       | varchar(20)   | YES  | UNI | NULL    |                |
+| ID_editora | int           | YES  | MUL | NULL    |                |
+| ID_autor   | int           | YES  | MUL | NULL    |                |
++------------+---------------+------+-----+---------+----------------+
+8 rows in set (0.016 sec)
+
+mysql> select * from Vendas;
++-----+------------+------------+----------+------------+--------+
+| ID  | Data       | ID_cliente | ID_livro | Quantidade | Total  |
++-----+------------+------------+----------+------------+--------+
+| 501 | 2024-06-15 |       NULL |     NULL |          2 | 119.80 |
+| 502 | 2024-06-18 |       NULL |     NULL |          1 |  39.90 |
+| 503 | 2023-06-20 |       NULL |     NULL |          3 | 149.70 |
+| 504 | 2024-09-04 |       NULL |     NULL |          1 |  45.00 |
+| 505 | 2024-03-27 |       NULL |     NULL |          4 | 220.00 |
++-----+------------+------------+----------+------------+--------+
+5 rows in set (0.007 sec)
+
+mysql> insert into Estoque (ID_livro, Quantidade, Localização) values
+    -> ('401', '50', 'Armazém A - Prateleira 1'),
+    -> ('402', '30', 'Armazém B - Prateleira 3'),
+    -> ('403', '75', 'Loja Central - Estante 5'),
+    -> ('404', '20', 'Depósito Secundário'),
+    -> ('405', '40', 'Loja Sul - Estante 2');
+Query OK, 5 rows affected (0.223 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select Título from Livros order by Título;
++------------------------+
+| Título                 |
++------------------------+
+| Além do Horizonte      |
+| Ecos do Deserto        |
+| O Jardim Secreto       |
+| O Segredo das Estrelas |
+| Sombras da Memória     |
++------------------------+
+5 rows in set (0.012 sec)
+
+mysql> select Título from Livros where ano > 2016;
++------------------------+
+| Título                 |
++------------------------+
+| O Segredo das Estrelas |
+| Sombras da Memória     |
+| O Jardim Secreto       |
+| Ecos do Deserto        |
++------------------------+
+4 rows in set (0.007 sec)
+
+mysql> select count(*) from Livros;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.118 sec)
+
+
+mysql> SELECT Gênero, COUNT(*) AS Total_Livros
+    -> FROM Livros
+    -> GROUP BY Gênero;
++-------------------+--------------+
+| Gênero            | Total_Livros |
++-------------------+--------------+
+| Ficção Científica |            1 |
+| Romance           |            1 |
+| Aventura          |            1 |
+| Fantasia          |            1 |
+| Drama             |            1 |
++-------------------+--------------+
+5 rows in set (0.111 sec)
+
+
+mysql> SELECT Total from Vendas order by Total DESC;
++--------+
+| Total  |
++--------+
+| 220.00 |
+| 149.70 |
+| 119.80 |
+|  45.00 |
+|  39.90 |
++--------+
+5 rows in set (0.006 sec)
+
+mysql> SELECT* FROM Autores;
++-----+----------------+---------------+-----------------+
+| ID  | Nome           | Nacionalidade | Data_Nascimento |
++-----+----------------+---------------+-----------------+
+| 101 | Lucas Ferreira | Brasileiro    | 1980-03-12      |
+| 102 | Sofia Montoya  | Espanhola     | 1975-07-25      |
+| 103 | Aiden Clark    | Canadense     | 1990-03-11      |
+| 104 | Mei Ling Zhang | Chinesa       | 1975-05-19      |
+| 105 | Omar Haddad    | Brasileiro    | 1978-09-30      |
++-----+----------------+---------------+-----------------+
+5 rows in set (0.008 sec)
+
+mysql> SELECT *
+    -> FROM Livros
+    -> WHERE ID_autor = '101';
+Empty set (0.125 sec)
+
+mysql> select nome
+    -> from Livros
+    -> where ID_autor = '101';
+ERROR 1054 (42S22): Unknown column 'nome' in 'field list'
+mysql> select Nome AS autor_nome from Livros where ID_autor = '101'
+    -> ;
+ERROR 1054 (42S22): Unknown column 'Nome' in 'field list'
+mysql> select *
+    -> from Livros
+    -> where ID_autor = '101';
+Empty set (0.298 sec)
+
+mysql> select *
+    -> from Livros
+    -> where ID_autor = '105';
+Empty set (0.010 sec)
+
+mysql> select * from autores;
++-----+----------------+---------------+-----------------+
+| ID  | Nome           | Nacionalidade | Data_Nascimento |
++-----+----------------+---------------+-----------------+
+| 101 | Lucas Ferreira | Brasileiro    | 1980-03-12      |
+| 102 | Sofia Montoya  | Espanhola     | 1975-07-25      |
+| 103 | Aiden Clark    | Canadense     | 1990-03-11      |
+| 104 | Mei Ling Zhang | Chinesa       | 1975-05-19      |
+| 105 | Omar Haddad    | Brasileiro    | 1978-09-30      |
++-----+----------------+---------------+-----------------+
+5 rows in set (0.055 sec)
+
+mysql> select Nacionalidade
+    -> from autores
+    -> where nacionalidade;
+Empty set, 5 warnings (0.040 sec)
+
+mysql> select Nome
+    -> from autores
+    -> where nacionalidade = 'Brasileiro';
++----------------+
+| Nome           |
++----------------+
+| Lucas Ferreira |
+| Omar Haddad    |
++----------------+
+2 rows in set (0.043 sec)
+
+mysql> select Nome
+    -> from autores
+    -> where Data_Nascimento > 1989;
++----------------+
+| Nome           |
++----------------+
+| Lucas Ferreira |
+| Sofia Montoya  |
+| Aiden Clark    |
+| Mei Ling Zhang |
+| Omar Haddad    |
++----------------+
+5 rows in set, 1 warning (0.028 sec)
+
+mysql> select Nome
+    -> from autores
+    -> where Data_Nascimento > '1989-01-01';
++-------------+
+| Nome        |
++-------------+
+| Aiden Clark |
++-------------+
+1 row in set (0.063 sec)
+
+mysql> select Nome
+    -> from autores
+    -> where Data_Nascimento < '1989-01-01';
++----------------+
+| Nome           |
++----------------+
+| Lucas Ferreira |
+| Sofia Montoya  |
+| Mei Ling Zhang |
+| Omar Haddad    |
++----------------+
+4 rows in set (0.012 sec)
+
+mysql> select * from livros;
++-----+------------------------+-------------------+------+-------+-------------------+------------+----------+
+| ID  | Título                 | Gênero            | Ano  | Preco | ISBN              | ID_editora | ID_autor |
++-----+------------------------+-------------------+------+-------+-------------------+------------+----------+
+| 401 | O Segredo das Estrelas | Ficção Científica | 2018 | 59.90 | 978-3-16-148410-0 |       NULL |     NULL |
+| 402 | Sombras da Memória     | Romance           | 2020 | 39.90 | 978-1-23-456789-7 |       NULL |     NULL |
+| 403 | Além do Horizonte      | Aventura          | 2016 | 49.90 | 978-0-12-345678-9 |       NULL |     NULL |
+| 404 | O Jardim Secreto       | Fantasia          | 2019 | 45.00 | 978-9-87-654321-0 |       NULL |     NULL |
+| 405 | Ecos do Deserto        | Drama             | 2021 | 55.00 | 978-4-56-789012-3 |       NULL |     NULL |
++-----+------------------------+-------------------+------+-------+-------------------+------------+----------+
+5 rows in set (0.048 sec)
+
+mysql> select ID_autor, count(*) as qtde_livros
+    -> from livros
+    -> group by ID_autor;
++----------+-------------+
+| ID_autor | qtde_livros |
++----------+-------------+
+|     NULL |           5 |
++----------+-------------+
+1 row in set (0.101 sec)
+
+mysql> select ID_autor, count(*) as qtde_livros
+    -> from livros
+    -> group by ID_autor
+    -> order by qtde_livros desc;
++----------+-------------+
+| ID_autor | qtde_livros |
++----------+-------------+
+|     NULL |           5 |
++----------+-------------+
+1 row in set (0.114 sec)
+
+mysql> select ID_autor, count(*) as sem_livros
+    -> from autores
+    -> ;
+ERROR 1054 (42S22): Unknown column 'ID_autor' in 'field list'
+mysql> select nome
+    -> from autores
+    -> where nome = 'Clark';
+Empty set (0.007 sec)
+
+mysql> select nome
+    -> from autores
+    -> where nome = '%Clark';
+Empty set (0.007 sec)
+
+mysql> select nome
+    -> from autores
+    -> where nome = '%Ferreira';
+Empty set (0.008 sec)
+
+mysql> select nome
+    -> from autores
+    -> where nome = 'Ferreira';
+Empty set (0.014 sec)
+
+mysql> select nome
+    -> from autores
+    -> where nome = '%F';
+Empty set (0.008 sec)
+
+mysql> select * from editoras;
++-----+------------------+-----------+---------+
+| ID  | Nome             | Cidade    | País    |
++-----+------------------+-----------+---------+
+| 201 | Editora Aurora   | São Paulo | Brasil  |
+| 202 | Libros del Sol   | Madrid    | Espanha |
+| 203 | Maple Publishing | Toronto   | Canadá  |
+| 204 | Lótus Editorial  | Xangai    | China   |
+| 205 | Nile Books       | Cairo     | Egito   |
++-----+------------------+-----------+---------+
+5 rows in set (0.095 sec)
+
+mysql> select país, count(*) as total
+    -> from editoras
+    -> where país = 'Brasil';
++--------+-------+
+| país   | total |
++--------+-------+
+| Brasil |     1 |
++--------+-------+
+1 row in set (0.118 sec)
+
+mysql> select ID_editora, count(*) as livros
+    -> from livros
+    -> group by ID from editoras;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from editoras' at line 3
+mysql> select ID_editora, count(*) as livros
+    -> from livros
+    -> group by livros;
+ERROR 1056 (42000): Can't group on 'livros'
+mysql> select ID_editora, count(*) as livros
+    -> from livros
+    -> group by ID_editoras;
+ERROR 1054 (42S22): Unknown column 'ID_editoras' in 'group statement'
+mysql> select ID_editora, count(*) as livros
+    -> from livros
+    -> group by ID_editora;
++------------+--------+
+| ID_editora | livros |
++------------+--------+
+|       NULL |      5 |
++------------+--------+
+1 row in set (0.110 sec)
+
+mysql> select ID_editora, count(*) as livros_publi
+    -> from livros
+    -> where ano = '2020';
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'livraria.livros.ID_editora'; this is incompatible with sql_mode=only_full_group_by
+mysql> select ID_editora
+    -> from livros
+    -> where ano = '2020';
++------------+
+| ID_editora |
++------------+
+|       NULL |
++------------+
+1 row in set (0.114 sec)
+
+mysql> select nome
+    -> from editoras
+    -> order by nome asc;
++------------------+
+| nome             |
++------------------+
+| Editora Aurora   |
+| Libros del Sol   |
+| Lótus Editorial  |
+| Maple Publishing |
+| Nile Books       |
++------------------+
+5 rows in set (0.127 sec)
+
+mysql> select nome
+    -> from clientes
+    -> order by nome asc;
++-----------------+
+| nome            |
++-----------------+
+| Ana Souza       |
+| Bruno Martins   |
+| Carla Lima      |
+| Diego Fernandes |
+| Elisa Rocha     |
++-----------------+
+5 rows in set (0.021 sec)
+
+mysql> select * from vendas;
++-----+------------+------------+----------+------------+--------+
+| ID  | Data       | ID_cliente | ID_livro | Quantidade | Total  |
++-----+------------+------------+----------+------------+--------+
+| 501 | 2024-06-15 |       NULL |     NULL |          2 | 119.80 |
+| 502 | 2024-06-18 |       NULL |     NULL |          1 |  39.90 |
+| 503 | 2023-06-20 |       NULL |     NULL |          3 | 149.70 |
+| 504 | 2024-09-04 |       NULL |     NULL |          1 |  45.00 |
+| 505 | 2024-03-27 |       NULL |     NULL |          4 | 220.00 |
++-----+------------+------------+----------+------------+--------+
+5 rows in set (0.060 sec)
+
+mysql> select ID_cliente
+    -> from vendas
+    -> where ID_livro = '403';
+Empty set (0.018 sec)
+
+mysql> select quantidade
+    -> ;
+ERROR 1054 (42S22): Unknown column 'quantidade' in 'field list'
+mysql> select quantidade, count(*) as qtde_compra
+    -> from vendas
+    -> order by id_cliente;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'livraria.vendas.Quantidade'; this is incompatible with sql_mode=only_full_group_by
+mysql> select quantidade, count(*) as qtde_compra
+    -> from vendas
+    -> group by quantidade;
++------------+-------------+
+| quantidade | qtde_compra |
++------------+-------------+
+|          2 |           1 |
+|          1 |           2 |
+|          3 |           1 |
+|          4 |           1 |
++------------+-------------+
+4 rows in set (0.054 sec)
+
+mysql> select ID_cliente, count(*) as total_compra
+    -> from vendas
+    -> group by ID_cliente
+    -> order by total_compra desc;
++------------+--------------+
+| ID_cliente | total_compra |
++------------+--------------+
+|       NULL |            5 |
++------------+--------------+
+1 row in set (0.115 sec)
+
+mysql> select * from clientes;
++-----+-----------------+-------------------------+-----------------+--------------------------+
+| ID  | Nome            | Email                   | Telefone        | Endereço                 |
++-----+-----------------+-------------------------+-----------------+--------------------------+
+| 301 | Ana Souza       | ana.souza@email.com     | (11) 91234-5678 | Rua das Flores, 123, SP  |
+| 302 | Bruno Martins   | bruno.martins@mail.com  | (21) 98765-4321 | Av. Central, 456, RJ     |
+| 303 | Carla Lima      | carla.lima@gmail.com    | (31) 99876-5432 | Rua do Comércio, 789, MG |
+| 304 | Diego Fernandes | diegof@yahoo.com        | (41) 93456-7890 | Av. Brasil, 321, PR      |
+| 305 | Elisa Rocha     | elisa.rocha@outlook.com | (51) 91234-9876 | Rua das Acácias, 654, RS |
++-----+-----------------+-------------------------+-----------------+--------------------------+
+5 rows in set (0.048 sec)
+
+mysql> select nome
+    -> from clientes
+    -> where endereço = 'SP';
+Empty set (0.006 sec)
+
+mysql> select nome
+    -> from clientes
+    -> where endereço = '%SP';
+Empty set (0.008 sec)
+
+mysql> select nome
+    -> from clientes
+    -> where endereço = 'Rua das Acácias, 654, RS';
++-------------+
+| nome        |
++-------------+
+| Elisa Rocha |
++-------------+
+1 row in set (0.008 sec)
+
+mysql> select nome
+    -> from clientes
+    -> where endereço = 'Rua das Acácias, 654%';
+Empty set (0.009 sec)
+
+mysql> select nome
+    -> from clientes
+    -> where endereço = 'Rua das Acácias%';
+Empty set (0.007 sec)
+
+mysql> select nome
+    -> from clientes
+    -> where endereço = Rua das Acácias%;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'das Acácias%' at line 3
+mysql> select nome
+    -> ;
+ERROR 1054 (42S22): Unknown column 'nome' in 'field list'
+mysql> select ID_cliente
+    -> from vendas
+    -> ;
++------------+
+| ID_cliente |
++------------+
+|       NULL |
+|       NULL |
+|       NULL |
+|       NULL |
+|       NULL |
++------------+
+5 rows in set (0.008 sec)
+
+mysql> select c.id, c.nome
+    -> from clientes c
+    -> left join vendas v ON c.id = v.ID_cliente
+    -> where v.ID_cliente is null;
++-----+-----------------+
+| id  | nome            |
++-----+-----------------+
+| 301 | Ana Souza       |
+| 302 | Bruno Martins   |
+| 303 | Carla Lima      |
+| 304 | Diego Fernandes |
+| 305 | Elisa Rocha     |
++-----+-----------------+
+5 rows in set (0.146 sec)
+
+mysql> select * from vendas;
++-----+------------+------------+----------+------------+--------+
+| ID  | Data       | ID_cliente | ID_livro | Quantidade | Total  |
++-----+------------+------------+----------+------------+--------+
+| 501 | 2024-06-15 |       NULL |     NULL |          2 | 119.80 |
+| 502 | 2024-06-18 |       NULL |     NULL |          1 |  39.90 |
+| 503 | 2023-06-20 |       NULL |     NULL |          3 | 149.70 |
+| 504 | 2024-09-04 |       NULL |     NULL |          1 |  45.00 |
+| 505 | 2024-03-27 |       NULL |     NULL |          4 | 220.00 |
++-----+------------+------------+----------+------------+--------+
+5 rows in set (0.046 sec)
+
+mysql> select quantidade
+    -> from vendas
+    -> order by data desc;
++------------+
+| quantidade |
++------------+
+|          1 |
+|          1 |
+|          2 |
+|          4 |
+|          3 |
++------------+
+5 rows in set (0.008 sec)
+
+mysql> select quantidade
+    -> from vendas
+    -> group by data
+    -> order by data asc;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'livraria.vendas.Quantidade' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> select quantidade
+    -> from vendas
+    -> order by data asc
+    -> group by data;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by data' at line 4
+mysql> select quantidade
+    -> from vendas
+    -> order by data asc;
++------------+
+| quantidade |
++------------+
+|          3 |
+|          4 |
+|          2 |
+|          1 |
+|          1 |
++------------+
+5 rows in set (0.009 sec)
+
+mysql> select quantidade
+    -> from vendas
+    -> ;
++------------+
+| quantidade |
++------------+
+|          2 |
+|          1 |
+|          3 |
+|          1 |
+|          4 |
++------------+
+5 rows in set (0.005 sec)
+
+mysql> select sum(total)
+    -> from vendas
+    -> where data > '2024-03-01';
++------------+
+| sum(total) |
++------------+
+|     424.70 |
++------------+
+1 row in set (0.021 sec)
+
+mysql> select total
+    -> from vendas
+    -> order by desc
+    -> max 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc
+max 1' at line 3
+mysql> select total
+    -> from vendas
+    -> order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 3
+mysql> select total
+    -> from vendas
+    -> order by total desc;
++--------+
+| total  |
++--------+
+| 220.00 |
+| 149.70 |
+| 119.80 |
+|  45.00 |
+|  39.90 |
++--------+
+5 rows in set (0.010 sec)
+
+mysql> select total
+    -> from vendas
+    -> order by total desc
+    -> limit 1;
++--------+
+| total  |
++--------+
+| 220.00 |
++--------+
+1 row in set (0.014 sec)
+
+mysql> select quantidade
+    -> from vendas
+    -> order by quantidade desc
+    -> limit 3;
++------------+
+| quantidade |
++------------+
+|          4 |
+|          3 |
+|          2 |
++------------+
+3 rows in set (0.007 sec)
+
+mysql> select sum(total)
+    -> from vendas;
++------------+
+| sum(total) |
++------------+
+|     574.40 |
++------------+
+1 row in set (0.111 sec)
+
+mysql> select l id
+    -> from estoque
+    -> ;
+ERROR 1054 (42S22): Unknown column 'l' in 'field list'
+mysql> select * from estoque;
++----------+------------+--------------------------+
+| ID_livro | Quantidade | Localização              |
++----------+------------+--------------------------+
+|      401 |         50 | Armazém A - Prateleira 1 |
+|      402 |         30 | Armazém B - Prateleira 3 |
+|      403 |         75 | Loja Central - Estante 5 |
+|      404 |         20 | Depósito Secundário      |
+|      405 |         40 | Loja Sul - Estante 2     |
++----------+------------+--------------------------+
+5 rows in set (0.116 sec)
+
+mysql> select l.id, l.nome
+    -> from livros l
+    -> left join estoque e ON l.id = e.ID_livro
+    -> where e.quantidade < 40;
+ERROR 1054 (42S22): Unknown column 'l.nome' in 'field list'
+mysql> select l.id, l.título
+    -> from livros l
+    -> left join estoque e ON l.id = e.ID_livro
+    -> where e.quantidade < 40;
++-----+--------------------+
+| id  | título             |
++-----+--------------------+
+| 402 | Sombras da Memória |
+| 404 | O Jardim Secreto   |
++-----+--------------------+
+2 rows in set (0.018 sec)
+
+mysql> select * from livros;
++-----+------------------------+-------------------+------+-------+-------------------+------------+----------+
+| ID  | Título                 | Gênero            | Ano  | Preco | ISBN              | ID_editora | ID_autor |
++-----+------------------------+-------------------+------+-------+-------------------+------------+----------+
+| 401 | O Segredo das Estrelas | Ficção Científica | 2018 | 59.90 | 978-3-16-148410-0 |       NULL |     NULL |
+| 402 | Sombras da Memória     | Romance           | 2020 | 39.90 | 978-1-23-456789-7 |       NULL |     NULL |
+| 403 | Além do Horizonte      | Aventura          | 2016 | 49.90 | 978-0-12-345678-9 |       NULL |     NULL |
+| 404 | O Jardim Secreto       | Fantasia          | 2019 | 45.00 | 978-9-87-654321-0 |       NULL |     NULL |
+| 405 | Ecos do Deserto        | Drama             | 2021 | 55.00 | 978-4-56-789012-3 |       NULL |     NULL |
++-----+------------------------+-------------------+------+-------+-------------------+------------+----------+
+5 rows in set (0.006 sec)
+
+mysql> select quantidade
+    -> from estoque
+    -> where localização = 'Armazem A';
+Empty set (0.007 sec)
+
+mysql> select quantidade
+    -> from estoque
+    -> where localização = 'Armazem A - Prateleira 1';
++------------+
+| quantidade |
++------------+
+|         50 |
++------------+
+1 row in set (0.006 sec)
+
+mysql> select l.id, l.título
+    -> from livros l
+    -> left join estoque e ON l.id= e.ID_livro
+    -> where e.ID_livro is null;
+Empty set (0.007 sec)
+
+mysql> select quantidade
+    -> from estoque;
++------------+
+| quantidade |
++------------+
+|         50 |
+|         30 |
+|         75 |
+|         20 |
+|         40 |
++------------+
+5 rows in set (0.006 sec)
+
+mysql> select ID_livro
+    -> from estoque
+    -> order by quantidade desc;
++----------+
+| ID_livro |
++----------+
+|      403 |
+|      401 |
+|      405 |
+|      402 |
+|      404 |
++----------+
+5 rows in set (0.008 sec)
+
+mysql> select ID_livro
+    -> from estoque ;
++----------+
+| ID_livro |
++----------+
+|      401 |
+|      402 |
+|      403 |
+|      404 |
+|      405 |
++----------+
+5 rows in set (0.005 sec)
+
+mysql> SELECT l.*
+    -> FROM livros l
+    -> LEFT JOIN estoque e ON l.id = e.livro_id
+    -> WHERE e.livro_id IS NULL;
+ERROR 1054 (42S22): Unknown column 'e.livro_id' in 'where clause'
+mysql> SELECT l.*
+    -> FROM livros l
+    -> LEFT JOIN estoque e ON l.id = e.ID_livro
+    -> WHERE e.ID_livro IS NULL;
