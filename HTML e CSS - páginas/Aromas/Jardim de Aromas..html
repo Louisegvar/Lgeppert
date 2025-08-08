@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page Avançada</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="assets/imagens/oleo-essencial.png" type="omage/png">
+  <style>
+    :root {
+      --primary: #899e75;
+      --dark: #1c1c1c;
+      --light: #ffffea;
+    }* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Questrial', sans-serif;;
+
+  background-color: var(--light);
+  color: var(--dark);
+  scroll-behavior: smooth;
+}
+
+header {
+  background-color: var(--primary);
+  padding: 1rem 2rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+nav a {
+  margin-left: 2rem;
+  color: white;
+  text-decoration: none;
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: white;
+  transition: width 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.hero {
+  height: 100vh;
+  background:url('https://opinioescertificadas.com.br/wp-content/uploads/2020/10/oleos-essenciais-capa.jpg');
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: left;
+  color: rgb(113, 50, 165);
+  padding-top: 4rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  animation: fadeInDown 1.5s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+section {
+  padding: 4rem 2rem;
+}
+
+.column{
+  width: 33.33%;
+  float: left;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+
+}
+
+.rec{
+  text-align: center;
+  padding-bottom: 10px;
+  margin-right: 95%;
+}
+
+figure {
+  padding-bottom: 150px;
+}
+img {
+  width: 300px;
+  height: 300px;
+}
+
+figcaption{
+  text-align: left;
+  font-size: 90%;
+}
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.features article {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.features article::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: var(--primary);
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.btn {
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #7c5faa;
+}
+
+footer {
+  background: #111;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Jardim de Aromas</div>
+      <div class="menu">
+        <a href="#sobre">Sobre</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#contato">Contato</a>
+      </div>
+    </nav>
+  </header>  <section class="hero">
+    <h1>Bem-vindo ao Jardim de aromas!</h1>
+  </section>  <section id="sobre">
+    <h2>Essências</h2>
+    <p>São ideais para perfumar ambientes por meio do aromatizador elétrico, proporcionando uma agradável sensação de bem-estar onde quer que seja aplicado. Navegue pelos produtos e encontre o que mais combina com você!</p>
+  </section> 
+  
+ <div class="column">
+<figure>
+  <img src="assets/imagens/rosa.jpg"  alt="Descrição da imagem">
+  <figcaption>A essência aromática de laranja é conhecida por suas propriedades revigorantes e estimulantes, sendo usada para aliviar o estresse, promover a alegria e melhorar a concentração. </figcaption>
+</figure></div>
+
+<div class="column">
+<figure>
+  <img src="assets/imagens/laranja.jpg"  alt="Descrição da imagem">
+  <figcaption>As essências aromáticas de peônia são conhecidas por suas propriedades relaxantes e calmantes, além de um aroma floral delicado e adocicado. Elas podem contribuir para criar um ambiente acolhedor e harmônico, proporcionando uma sensação de bem-estar e reduzindo o estresse. </figcaption>
+</figure></div>
+
+<div class="column">
+<figure>
+  <img src="assets/imagens/verde.jpg"   alt="Descrição da imagem">
+  <figcaption> É amplamente conhecida por seu aroma refrescante e por suas propriedades repelentes de insetos. Além disso, a citronela possui propriedades antimicrobianas, antissépticas e pode ser utilizada na aromaterapia para promover relaxamento e melhorar o humor.</figcaption>
+</figure></div>
+
+
+  <section id="recursos">
+ <div class="rec">
+<h1>Recursos</h1>
+</div>
+
+    <div class="features">
+      <article>
+        <h3><i class="fa-solid fa-leaf"></i> Calmantes</h3>
+        <p>Possuem particularidades especiais e tranquilizantes.</p>
+      </article>
+      <article>
+        <h3><i class="fa-solid fa-heart"></i> Bem-estar</h3>
+        <p>Promovem o bem-estar e melhoram o humor.</p>
+      </article>
+      <article>
+        <h3><i class="fa-solid fa-seedling"></i> Óleos essenciais</h3>
+        <p>São naturais e podem ajudar com dores e mal-estar.</p>
+      </article>
+    </div>
+  </section>  <section id="contato">
+    <h2>Contato</h2>
+    <form class="contact-form">
+      <input type="text" placeholder="Seu nome" required>
+      <input type="email" placeholder="Seu e-mail" required>
+      <textarea rows="4" placeholder="Sua pedido ou mensagem..."></textarea>
+      <button type="submit" class="btn">Enviar</button>
+    </form>
+  </section>  <footer>
+    <p>© 2025 Jardim de Aromas. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>

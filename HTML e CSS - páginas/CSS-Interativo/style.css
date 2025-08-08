@@ -1,0 +1,536 @@
+/* Quando estilizar um html, usar este bloco * como padrão */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #ac496a 0%, #764ba2 100%);
+    min-height: 100vw;
+}
+
+header{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+    animation: slidDown 0.8s ease-out;
+}
+
+@keyframes slidDown{
+    from{
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+nav{
+    /* /* border: 3px solid black; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo{
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    animation: brilho 2s ease-in-out infinite alternate;
+}
+
+@keyframes brilho{
+    from{
+        text-shadow: 0 0 5px rgb(148, 147, 147);
+    }
+
+    to{
+        text-shadow: 0 0 30px rgb(255, 255, 255);
+    }
+}
+
+.nav-links{
+    /* border: 3px solid black; */
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a{
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 1rem;
+}
+
+.nav-links a::before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: all 0.3S ease;
+    transform: translateX(-50%);
+}
+
+.nav-links a:hover::before{
+    width: 100%;
+}
+
+.hero{
+    /* border: 3px solid black;  */
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.hero-content{
+    max-width: 800px;
+    padding: 2rem;
+    animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+@keyframes fadeInUp{
+    from{
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero h1{
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #929292, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textShine 3s ease-in-out infinite;
+}
+
+@keyframes textShine{
+    0%,
+    100%{
+        background-position: 0% 50%;
+    }
+
+    50%{
+        background-position: 100% 50%;
+    }
+}
+
+.hero p{
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-in-out 0.8s both;
+}
+
+.cta-button{
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(45deg, #dfdddd, #9b9b9b);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.87);
+    animation: fadeInUp 1s ease-out 1.1s both;
+}
+
+.cta-button:hover{
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(177, 18, 105, 0.8);
+}
+
+.features{
+    /* border: 3px solid black; */
+    padding: 5rem 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+}
+
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.features h2{
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #ad1874;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.features-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.feature-card{
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.8s ease-out;
+        position: relative;
+        overflow: hidden;
+}
+
+.feature-card::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.feature-card:hover::before{
+    left: 100%;
+}
+
+.feature-card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    /*
+    * Define a largura e altura do ícone, criando um quadrado.
+    */
+    width: 80px;
+    height: 80px;
+    /*
+    * Aplica um gradiente de fundo ao ícone.
+    */
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    /*
+    * Arredonda as bordas para criar um círculo.
+    */
+    border-radius: 50%;
+    /*
+    * Ativa o Flexbox para centralizar o conteúdo do ícone (o próprio ícone)
+    * dentro do círculo.
+    */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*
+    * Centraliza o ícone horizontalmente e adiciona uma margem inferior.
+    */
+    margin: 0 auto 1rem;
+    /*
+    * Define o tamanho da fonte do ícone.
+    */
+    font-size: 2rem;
+    /*
+    * Define a cor do ícone como branco.
+    */
+    color: white;
+    /*
+    * Aplica uma animação de rotação com 4 segundos de duração, linear (velocidade constante),
+    * infinita.
+    */
+    animation: rotate 4s linear infinite;
+}
+
+/*
+* Define a animação 'rotate' para o ícone.
+*/
+@keyframes rotate {
+    /*
+    * Estado inicial: nenhuma rotação.
+    */
+    from {
+        transform: rotate(0deg);
+    }
+
+    /*
+    * Estado final: rotação completa de 360 graus.
+    */
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/*
+* Estilos aplicados ao ícone do recurso quando o mouse passa sobre o cartão pai.
+* Isso acelera a rotação do ícone no hover.
+*/
+.feature-card:hover .feature-icon {
+    /*
+    * Reduz a duração da animação para 0.5 segundos, fazendo o ícone girar mais rápido.
+    */
+    animation-duration: 0.5s;
+}
+
+/* --- */
+
+/* Partículas flutuantes */
+/*
+* Estilos para o contêiner das partículas, que cobrirá toda a área da seção.
+*/
+.particles {
+    /*
+    * Posiciona o contêiner de forma absoluta em relação ao seu pai (.hero).
+    */
+    position: absolute;
+    /*
+    * Ocupa toda a largura e altura do pai.
+    */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*
+    * Impede que as partículas interceptem eventos do mouse,
+    * permitindo que o usuário interaja com o conteúdo por baixo delas.
+    */
+    pointer-events: none;
+    /*
+    * Esconde qualquer partícula que saia dos limites do contêiner.
+    */
+    overflow: hidden;
+}
+
+/*
+* Estilos para cada partícula individual.
+*/
+.particle {
+    /*
+    * Posiciona a partícula de forma absoluta em relação ao seu contêiner (.particles).
+    */
+    position: absolute;
+    /*
+    * Define o tamanho da partícula (um pequeno quadrado).
+    */
+    width: 4px;
+    height: 4px;
+    /*
+    * Define a cor da partícula como branca e semi-transparente.
+    */
+    background: rgba(255, 255, 255, 0.5);
+    /*
+    * Arredonda as bordas para criar um círculo (uma "bolinha").
+    */
+    border-radius: 50%;
+    /*
+    * Aplica uma animação de flutuação com 6 segundos de duração, linear, infinita.
+    */
+    animation: float 6s linear infinite;
+}
+
+/*
+* Define a animação 'float' para as partículas.
+* Elas "flutuam" de baixo para cima, desaparecendo no topo e reaparecendo embaixo.
+*/
+@keyframes float {
+    /*
+    * Estado inicial: começa na parte inferior da tela, rotacionada e transparente.
+    */
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    /*
+    * As partículas aparecem.
+    */
+    10% {
+        opacity: 1;
+    }
+
+    /*
+    * As partículas permanecem visíveis durante a maior parte do percurso.
+    */
+    90% {
+        opacity: 1;
+    }
+
+    /*
+    * Estado final: sobe para fora da tela, rotacionada e transparente.
+    */
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/*
+* Aplica atrasos diferentes para cada partícula, fazendo com que apareçam
+* em momentos diferentes e em posições horizontais distintas,
+* criando um efeito mais natural e contínuo.
+*/
+.particle:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.particle:nth-child(2) {
+    left: 20%;
+    animation-delay: 1s;
+}
+
+.particle:nth-child(3) {
+    left: 30%;
+    animation-delay: 2s;
+}
+
+.particle:nth-child(4) {
+    left: 40%;
+    animation-delay: 3s;
+}
+
+.particle:nth-child(5) {
+    left: 50%;
+    animation-delay: 4s;
+}
+
+.particle:nth-child(6) {
+    left: 60%;
+    animation-delay: 5s;
+}
+
+.particle:nth-child(7) {
+    left: 70%;
+    animation-delay: 2.5s; /* Atraso diferente para variar */
+}
+
+.particle:nth-child(8) {
+    left: 80%;
+    animation-delay: 1.5s; /* Atraso diferente para variar */
+}
+
+.particle:nth-child(9) {
+    left: 90%;
+    animation-delay: 3.5s; /* Atraso diferente para variar */
+}
+
+/* --- */
+
+/* Footer */
+/*
+* Estilos para o rodapé da página.
+*/
+footer {
+    /*
+    * Define a cor de fundo.
+    */
+    background: #333;
+    /*
+    * Define a cor do texto como branco.
+    */
+    color: white;
+    /*
+    * Centraliza o texto.
+    */
+    text-align: center;
+    /*
+    * Adiciona preenchimento interno.
+    */
+    padding: 2rem;
+}
+
+/* --- */
+
+/* Responsividade */
+/*
+* Mídia query para aplicar estilos específicos quando a largura da tela
+* for menor ou igual a 768px (típico para tablets e celulares).
+*/
+@media (max-width: 768px) {
+    /*
+    * Esconde os links de navegação em telas menores,
+    * geralmente para serem substituídos por um "menu hambúrguer" em JavaScript.
+    */
+    .nav-links {
+        display: none;
+    }
+
+    /*
+    * Reduz o tamanho do título principal em telas menores.
+    */
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    /*
+    * Reduz o tamanho do parágrafo principal em telas menores.
+    */
+    .hero p {
+        font-size: 1rem;
+    }
+
+    /*
+    * Em telas menores, a grade de recursos se torna uma única coluna.
+    * '1fr' significa que a coluna ocupará 1 fração do espaço disponível.
+    */
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- */
+
+/* Animação de carregamento da página */
+/*
+* Define uma animação simples de fade-in para a página inteira.
+*/
+@keyframes pageLoad {
+    /*
+    * Inicia totalmente transparente.
+    */
+    from {
+        opacity: 0;
+    }
+
+    /*
+    * Termina totalmente opaco.
+    */
+    to {
+        opacity: 1;
+    }
+}
+
+/*
+* Aplica a animação 'pageLoad' ao elemento <body> quando a página é carregada.
+* '0.5s' é a duração e 'ease-in' faz com que a animação comece lentamente e acelere.
+*/
+body {
+    animation: pageLoad 0.5s ease-in;
+}

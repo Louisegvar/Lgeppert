@@ -1,0 +1,95 @@
+.btn-gradient{
+    background-image: linear-gradient(to right, #f8a9d1, #d82e75);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+}
+.btn-gradient:hover{
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgb(185, 13, 85, 0.6);
+    /*0 -> deslocamento horizontal: sem deslocamento, sombra centralizada
+    5px -> deslocamento vertical: sombra projetada 5px para baixo
+    20px -> raio de desfoque: sombra borrada e suave
+    rgba -> cor da sombra*/
+}
+
+.btn-neon{
+    background: transparent;
+    color: #ff3c00;
+    padding: 12px 24px;
+    border: 2px solid #ff3c00;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.btn-neon:hover{
+    color: #ffffff;
+    background: #ff3c00;
+    box-shadow: 
+    0 0 20px #ff3c00,
+    0 0 40px #ff3c00,
+    0 0 60px #ff3c00;
+    text-shadow: 0 0 10px #f77846;
+}
+
+.btn-3d{
+    background: linear-gradient(to bottom, #fc6b6b, #e64132);
+    padding: 15px 30px;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    transition: all 0.2s ease; /*Transição rápida para todas as propriedades.*/
+    text-decoration: none;
+    box-shadow:
+     0 6px 0 #d32f2f, 
+     0 8px 15px #4a0c0c;
+}
+
+.btn-3d:hover{
+    /*Move o botão 2px para baixo ao passar o mouse*/
+    transform: translateY(2px);
+    box-shadow: /*Ajusta a sombra para simular pressão*/
+    0 4px 0 #d32f2f, 
+    0 6px 10px #4a0c0c;
+}
+
+.btn-3d:active{
+    transform:  translateY(6px);
+    box-shadow: /*Ajusta a sombra para simular pressão*/
+    0 0 0 #d32f2f, 
+    0 2px 5px #4a0c0c;
+}
+
+.btn-ghost{
+    background-color: transparent;
+    color: #008cba;
+    padding: 10px 20px;
+    border: 2px solid #008cba;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-ghost:hover{
+    background-color: #008cba;
+    color: white;
+}
